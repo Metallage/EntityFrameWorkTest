@@ -51,7 +51,7 @@ namespace EntityFrameWorkTest.DBContext
                     "NsName TEXT NOT NULL UNIQUE, Ip TEXT NOT NULL UNIQUE, UserId INTEGER, "+
                     "FOREIGN KEY(UserId) REFERENCES User(Id))";
             createStrings.Add(createCompString);
-            string createSoftString = "CREATE TABLE IF NOT EXISTS Software (Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, " +
+            string createSoftString = "CREATE TABLE IF NOT EXISTS Softwares (Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, " +
                     "Name TEXT NOT NULL UNIQUE, Version TEXT NOT NULL)";
             createStrings.Add(createSoftString);
             string createInstallString = "CREATE TABLE IF NOT EXISTS Installs (Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, " +

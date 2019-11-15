@@ -18,7 +18,7 @@ namespace EntityFrameWorkTest.DBContext
 
         public DbSet<User> Users { get; set; }
         public DbSet<Computer> Computers { get; set; }
-        public DbSet<Software> Software { get; set; }
+        public DbSet<Software> Softwares { get; set; }
         public DbSet<Install> Installs { get; set; }
 
     }
