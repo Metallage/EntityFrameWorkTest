@@ -11,6 +11,8 @@ namespace EntityFrameWorkTest
     class Program
     {
 
+        
+
         static void GenerateSomeData()
         {
             using (MyDB mydb = new MyDB())
@@ -49,6 +51,20 @@ namespace EntityFrameWorkTest
             Console.WriteLine("Всего ПО - {0}", myDb.Softwares.Count());
             Console.WriteLine("Всего установок - {0}", myDb.Installs.Count());
         }
+
+        static void PrintUpdate(MyDB mydb)
+        {
+            var result = from install in mydb.Installs
+                         join comp in mydb.Computers on install.CompId equals comp.Id
+                         join user in mydb.Users on comp.UserId equals user.Id
+                         join soft in mydb.Softwares on install.SoftId equals soft.Id
+                         where soft.Version!=install.Version
+                         select new { ComputerName=comp.NsName,  UserFio = user.Fio, OldVersion=install.Version, NewVersion=soft.Version, SoftName = soft.Name };
+            foreach (var rs in result)
+                Console.WriteLine("На компьютере {0} пользователя {1} не совпадает версии ПО {2}.\n Должно быть {3}, установлено {4}",rs.ComputerName, 
+                    rs.UserFio, rs.SoftName, rs.NewVersion, rs.OldVersion);
+        }
+
         static void Main(string[] args)
         {
             string dbName = "test.sqlite";
@@ -61,10 +77,11 @@ namespace EntityFrameWorkTest
             using (MyDB mydb = new MyDB())
             {
                 PrintSummary(mydb);
-                
+                PrintUpdate(mydb);
+
                 //mydb.Users.Add(new User() { Fio = "Ололошечка", Telephone = "+668-777" });
                 //mydb.SaveChanges();
-               // Console.WriteLine("{0}", mydb.Users.Where(x => x.Id == 1).ToList().Select(x => new {Fio=x.Fio, Tel=x.Telephone}).Single().Tel); //It WORKS!!
+                // Console.WriteLine("{0}", mydb.Users.Where(x => x.Id == 1).ToList().Select(x => new {Fio=x.Fio, Tel=x.Telephone}).Single().Tel); //It WORKS!!
                 Console.ReadLine();
 
             }
